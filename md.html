@@ -1,4 +1,3 @@
-<!-- md.html -->
 <!DOCTYPE html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,7 +18,6 @@
     html { background-color: #000; color: #fff; }
   }
 
-  /* centered plain nav links */
   header {
     position: sticky;
     top: 0;
@@ -104,7 +102,6 @@
 
 <header>
   <a id="lnk-edit" href="/">EDIT</a>
-  <a id="lnk-md" href="/md">MD</a>
   <a id="lnk-qr" href="/qr?from=md">QR</a>
 </header>
 
@@ -135,7 +132,6 @@
   function updateLinks() {
     const hash = location.hash || ''
     document.getElementById('lnk-edit').href = '/' + hash
-    document.getElementById('lnk-md').href = '/md' + hash
     document.getElementById('lnk-qr').href = '/qr?from=md' + hash
   }
 
