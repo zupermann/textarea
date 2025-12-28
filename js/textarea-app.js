@@ -14,6 +14,10 @@ export function initEditorApp({ editorSelector, linkQrSelector, linkMdSelector }
 
   addEventListener('DOMContentLoaded', load)
   addEventListener('hashchange', load)
+  addEventListener('pageshow', (e) => {
+    if (e.persisted) load()
+    queueMicrotask(() => article.focus())
+  })
 
   addEventListener('load', () => {
     new MutationObserver(save).observe(article, { attributeFilter: ['style'] })
