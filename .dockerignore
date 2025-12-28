@@ -1,0 +1,8 @@
+.git
+.github
+node_modules
+docker-compose.yml
+docker/
+README.md
+*.md
+.DS_Store
