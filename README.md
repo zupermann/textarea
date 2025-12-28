@@ -22,4 +22,8 @@ A _minimalist_ text editor that lives entirely in your browser and stores everyt
 
 ---
 
+## Added by zupermann:
+- Docker: `docker compose up -d --build`
+- md (read-only) viewer: e.g. https://txt.asiminei.com/md#TY9BS8NAEIXv8ysexEO7NgnVm0LBHqSK6KF4EiHpZmzWbnbrZiKF0vx2iUlKj2_eN_PmRVhxXhi3xZyi6CxuKLpQt0RxHBMptfS2gPBBlJpBGcmt0b2eQSm16exr9HPVMW1bSzA7ljL4Zlu2LUBPzhrHyLQvOAMf8mpvORkyFlhar3c_jRcGaLHAK9fCBTbn8UDGeHc-FBy4gDW1EBCPsBGuKMaD81Jy6CXNE7xd8jcJ1qy9G3AA82Q8MB7uN__zPl6M20H8-PHnpBTZ13dpOlbQvpoOcJZl3zWlKR7ZaS7Qde0rYPKc_-ZrHcxepvTVOC3GO2wDs0xcXvEURwICSxMcshVb62e4OnbWKbunE_0B
+
 *Made with ❤️ and JavaScript*
