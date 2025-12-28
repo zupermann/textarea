@@ -1,0 +1,9 @@
+services:
+  textarea:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: textarea
+    restart: unless-stopped
+    ports:
+      - "8182:80"
