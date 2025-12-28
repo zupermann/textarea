@@ -1,3 +1,4 @@
+<!-- md.html -->
 <!DOCTYPE html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,8 +19,28 @@
     html { background-color: #000; color: #fff; }
   }
 
+  /* centered plain nav links */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    padding: 14px 18px 6px;
+    background: inherit;
+    text-align: center;
+    font: 14px / 1.4 system-ui;
+    opacity: 0.85;
+    user-select: none;
+  }
+  header a {
+    color: inherit;
+    text-decoration: none;
+    margin: 0 10px;
+    text-underline-offset: 6px;
+  }
+  header a:hover { text-decoration: underline; }
+
   article {
-    padding: 18px max(18px, calc(50vw - 400px));
+    padding: 12px max(18px, calc(50vw - 400px)) 18px;
     width: 100%;
     min-height: 100vh;
     font: 18px / 1.6 system-ui;
@@ -68,7 +89,6 @@
     word-break: break-word;
   }
 
-  /* Tables (optional but nice) */
   article table {
     border-collapse: collapse;
     width: 100%;
@@ -82,16 +102,20 @@
   }
 </style>
 
+<header>
+  <a id="lnk-edit" href="/">EDIT</a>
+  <a id="lnk-md" href="/md">MD</a>
+  <a id="lnk-qr" href="/qr?from=md">QR</a>
+</header>
+
 <article></article>
 
-<!-- Local vendor libs -->
 <script src="vendor/markdown-it.min.js"></script>
 <script src="vendor/purify.min.js"></script>
 
 <script>
   const article = document.querySelector('article')
 
-  // Same SW as main page (optional)
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js')
   }
@@ -99,26 +123,34 @@
   console.log('%cGitHub https://github.com/antonmedv/textarea', 'font-size: 16px; border: 1px solid lightblue; border-radius: 12px; padding: 10px 14px; ')
 
   const md = window.markdownit({
-    html: false,        // do NOT allow raw HTML in markdown
-    linkify: true,      // auto-link bare URLs
-    typographer: true,  // smart punctuation
+    html: false,
+    linkify: true,
+    typographer: true,
     breaks: false
   })
 
   addEventListener('DOMContentLoaded', load)
   addEventListener('hashchange', load)
 
+  function updateLinks() {
+    const hash = location.hash || ''
+    document.getElementById('lnk-edit').href = '/' + hash
+    document.getElementById('lnk-md').href = '/md' + hash
+    document.getElementById('lnk-qr').href = '/qr?from=md' + hash
+  }
+
   async function load() {
     try {
       let hash = location.hash
 
-      // If opened without hash, try last saved hash (same behavior as main page)
       if (!hash) {
         hash = localStorage.getItem('hash') ?? ''
         if (hash) history.replaceState({}, '', hash)
       } else {
         try { localStorage.setItem('hash', hash) } catch (e) {}
       }
+
+      updateLinks()
 
       if (!hash) {
         article.innerHTML = ''
@@ -137,20 +169,16 @@
     const decompressed = await decompress(hash.slice(1))
     const [content, style] = decompressed.split('\x00')
 
-    // Title from first markdown heading line: "# Title"
     updateTitleFromMarkdown(content || '')
 
-    // Render markdown -> HTML, then sanitize
     const rendered = md.render(content || '')
     article.innerHTML = DOMPurify.sanitize(rendered)
 
-    // Preserve optional style (same feature as original)
     if (style) article.setAttribute('style', style)
     else article.removeAttribute('style')
   }
 
   function updateTitleFromMarkdown(src) {
-    // match first line like: "# Title"
     const m = src.match(/^\s*#\s+(.+?)\s*$/m)
     document.title = m?.[1] ?? 'Textarea'
   }

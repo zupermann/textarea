@@ -90,10 +90,11 @@
   console.log('%cGitHub https://github.com/antonmedv/textarea', 'font-size: 16px; border: 1px solid lightblue; border-radius: 12px; padding: 10px 14px; ')
 
   function updateLinks() {
-    const hash = location.hash || ''
-    document.getElementById('link-qr').href = '/qr' + hash
-    document.getElementById('link-md').href = '/md' + hash
-  }
+  const hash = location.hash || ''
+  document.getElementById('link-qr').href = '/qr?from=edit' + hash
+  document.getElementById('link-md').href = '/md' + hash
+}
+
 
   addEventListener('DOMContentLoaded', updateLinks)
   addEventListener('hashchange', updateLinks)
